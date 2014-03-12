@@ -6,11 +6,11 @@ require 'greek_stemmer/version'
 Gem::Specification.new do |spec|
   spec.name          = "greek_stemmer"
   spec.version       = GreekStemmer::VERSION
-  spec.authors       = ["Giorgos Tsiftsis"]
-  spec.email         = ["giorgos.tsiftsis@skroutz.gr"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.authors       = ["Tasos Stathopoulos", "Giorgos Tsiftsis"]
+  spec.email         = ["stathopa@skroutz.gr", "giorgos.tsiftsis@skroutz.gr"]
+  spec.summary       = %q{A simple Greek stemmer}
+  spec.description   = %q{A simple Greek stemmer}
+  spec.homepage      = "https://gitlab.skroutz.gr/greek_stemmer"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -18,6 +18,6 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.5"
+  spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
 end
