@@ -1,66 +1,35 @@
 # coding: utf-8
 require "greek_stemmer/version"
+require "yaml"
 
 module GreekStemmer
   extend self
 
-  def stem(word)
-     @step1list = {
-          'ΦΑΓΙΑ' => 'ΦΑ',
-          'ΦΑΓΙΟΥ' => 'ΦΑ',
-          'ΦΑΓΙΩΝ' => 'ΦΑ',
-          'ΣΚΑΓΙΑ' => 'ΣΚΑ',
-          'ΣΚΑΓΙΟΥ' => 'ΣΚΑ',
-          'ΣΚΑΓΙΩΝ' => 'ΣΚΑ',
-          'ΟΛΟΓΙΟΥ' => 'ΟΛΟ',
-          'ΟΛΟΓΙΑ' => 'ΟΛΟ',
-          'ΟΛΟΓΙΩΝ' => 'ΟΛΟ',
-          'ΣΟΓΙΟΥ' => 'ΣΟ',
-          'ΣΟΓΙΑ' => 'ΣΟ',
-          'ΣΟΓΙΩΝ' => 'ΣΟ',
-          'ΤΑΤΟΓΙΑ' => 'ΤΑΤΟ',
-          'ΤΑΤΟΓΙΟΥ' => 'ΤΑΤΟ',
-          'ΤΑΤΟΓΙΩΝ' => 'ΤΑΤΟ',
-          'ΚΡΕΑΣ' => 'ΚΡΕ',
-          'ΚΡΕΑΤΟΣ' => 'ΚΡΕ',
-          'ΚΡΕΑΤΑ' => 'ΚΡΕ',
-          'ΚΡΕΑΤΩΝ' => 'ΚΡΕ',
-          'ΠΕΡΑΣ' => 'ΠΕΡ',
-          'ΠΕΡΑΤΟΣ' => 'ΠΕΡ',
-          'ΠΕΡΑΤΑ' => 'ΠΕΡ',
-          'ΠΕΡΑΤΩΝ' => 'ΠΕΡ',
-          'ΤΕΡΑΣ' => 'ΤΕΡ',
-          'ΤΕΡΑΤΟΣ' => 'ΤΕΡ',
-          'ΤΕΡΑΤΑ' => 'ΤΕΡ',
-          'ΤΕΡΑΤΩΝ' => 'ΤΕΡ',
-          'ΦΩΣ' => 'ΦΩ',
-          'ΦΩΤΟΣ' => 'ΦΩ',
-          'ΦΩΤΑ' => 'ΦΩ',
-          'ΦΩΤΩΝ' => 'ΦΩ',
-          'ΚΑΘΕΣΤΩΣ' => 'ΚΑΘΕΣΤ',
-          'ΚΑΘΕΣΤΩΤΟΣ' => 'ΚΑΘΕΣΤ',
-          'ΚΑΘΕΣΤΩΤΑ' => 'ΚΑΘΕΣΤ',
-          'ΚΑΘΕΣΤΩΤΩΝ' => 'ΚΑΘΕΣΤ',
-          'ΓΕΓΟΝΟΣ' => 'ΓΕΓΟΝ',
-          'ΓΕΓΟΝΟΤΟΣ' => 'ΓΕΓΟΝ',
-          'ΓΕΓΟΝΟΤΑ' => 'ΓΕΓΟΝ',
-          'ΓΕΓΟΝΟΤΩΝ' => 'ΓΕΓΟΝ'
-        }
+  # Helper method for loading settings
+  #
+  # @param key [String] the key
+  def load_settings(key)
+    begin
+      YAML.load_file("config/stemmer.yml")[key]
+    rescue => e
+      raise "Please provide a valid config/stemmer.yml file, #{e}"
+    end
+  end
 
-        @step1regexp = /(.*)(#{@step1list.keys.join("|")})$/u
-
+  # Transformations for step 1 words
+  STEP_1_EXCEPTIONS = load_settings("step_1_exceptions")
 
     return word if word.length < 3
 
-    @skip = false
+    step_1_regexp = /(.*)(#{STEP_1_EXCEPTIONS.keys.join("|")})$/u
 
     @stem = word
 
     # return @stem if ::Babelizer::Stemmer::Stopwords::EL.include?(@stem)
 
-    #step 1
-    @stem.scan(@step1regexp) do |st, suffix|
-      @stem = st + @step1list[suffix]
+    # step 1
+    stem.scan(step_1_regexp) do |st, suffix|
+      stem = st + STEP_1_EXCEPTIONS[suffix]
     end
 
     #step 2a
