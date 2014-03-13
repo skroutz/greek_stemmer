@@ -22,6 +22,9 @@ module GreekStemmer
   # Transformations for step 1 words
   STEP_1_EXCEPTIONS = load_settings("step_1_exceptions")
 
+  # Protected words
+  PROTECTED_WORDS   = load_settings("protected_words")
+
   def stem(word)
     return word if word.length < 3
 
@@ -29,7 +32,7 @@ module GreekStemmer
 
     stem = word.dup
 
-    # return stem if ::Babelizer::Stemmer::Stopwords::EL.include?(stem)
+    return stem if PROTECTED_WORDS.include?(stem)
 
     # step 1
     stem.scan(step_1_regexp) do |st, suffix|
