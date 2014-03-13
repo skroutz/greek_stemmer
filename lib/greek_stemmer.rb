@@ -2,6 +2,9 @@
 require "greek_stemmer/version"
 require "yaml"
 
+# Please note that we use only upcase letters for all methods. One should
+# normalize input streams before using the `stem` method. Normalization means
+# detone and upcase.
 module GreekStemmer
   extend self
 

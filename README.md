@@ -1,6 +1,8 @@
 # GreekStemmer
 
-TODO: Write a gem description
+A simple Greek stemmer algorithm.
+
+This algorithm is based on this [paper](http://people.dsv.su.se/~hercules/papers/Ntais_greek_stemmer_thesis_final.pdf) from George Ntais.
 
 ## Installation
 
@@ -18,7 +20,22 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+In order to use this stemmer you should normalize input.
+Normalization means two things for this algorithm: detone and upcase.
+
+```ruby
+  require 'greek_stemmer'
+
+  GreekStemmer.stem("ΠΟΣΟΤΗΤΑ") # => "ΠΟΣΟΤΗΤ"
+```
+
+## References
+
+* [Development of a Stemmer for the Greek Language](http://people.dsv.su.se/~hercules/papers/Ntais_greek_stemmer_thesis_final.pdf)
+
+## Credits
+
+Original work: [bandito](https://github.com/bandito)
 
 ## Contributing
 
@@ -27,3 +44,8 @@ TODO: Write usage instructions here
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## License
+
+greek_stemmer is licensed under MIT License. See [LICENSE](LICENSE.txt) for details.
+
