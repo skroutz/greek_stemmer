@@ -12,8 +12,10 @@ module GreekStemmer
   #
   # @param key [String] the key
   def load_settings(key)
+    config_path = File.expand_path("../../config/stemmer.yml", __FILE__)
+
     begin
-      YAML.load_file("config/stemmer.yml")[key]
+      YAML.load_file(config_path)[key]
     rescue => e
       raise "Please provide a valid config/stemmer.yml file, #{e}"
     end
