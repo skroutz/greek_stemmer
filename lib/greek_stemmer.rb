@@ -25,10 +25,17 @@ module GreekStemmer
   # Protected words
   PROTECTED_WORDS   = load_settings("protected_words")
 
+  # Regular expression that checks if the word contains only Greek characters
+  ALPHABET = Regexp.new("^[ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ]+$").freeze
+
+  # Stems Greek words
+  #
+  # @param  word  [String]  the word to be stemmed
+  # @return       [String]  the stemmed word
   def stem(word)
     return word if word.length < 3
     stem = word.dup
-    return stem if PROTECTED_WORDS.include?(stem)
+    return stem if PROTECTED_WORDS.include?(stem) || !greek?(word)
 
     step_1_regexp = /(.*)(#{STEP_1_EXCEPTIONS.keys.join("|")})$/u
 
@@ -213,5 +220,9 @@ module GreekStemmer
       word = st
     end
     word
+  end
+
+  def greek?(word)
+    !! word.match(ALPHABET)
   end
 end
