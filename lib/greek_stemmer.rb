@@ -1,3 +1,4 @@
+# coding: utf-8
 require "greek_stemmer/version"
 
 module GreekStemmer
