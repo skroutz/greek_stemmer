@@ -1,4 +1,5 @@
 require "bundler/gem_tasks"
+require "greek_stemmer"
 
 desc "Update the stems of the sample words"
 task :update_greek_stemming_sample do
@@ -17,5 +18,3 @@ task :update_greek_stemming_sample do
     end
   end
 end
-
-task :default => :test
