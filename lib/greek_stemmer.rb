@@ -72,7 +72,13 @@ module GreekStemmer
       stem << "Ε" if st =~ /^(Θ|Δ|ΕΛ|ΓΑΛ|Ν|Π|ΙΔ|ΠΑΡ|ΣΤΕΡ|ΟΡΦ|ΑΝΔΡ|ΑΝΤΡ)$/u
     end
 
-    # step 3
+    # step 3a
+    stem.scan(/^(.+?)(ΕΙΟ|ΕΙΟΣ|ΕΙΟΙ|ΕΙΑ|ΕΙΑΣ|ΕΙΕΣ|ΕΙΟΥ|ΕΙΟΥΣ|ΕΙΩΝ)$/u) do |st, suffix|
+      # be conservative with this rule, take care for overstemming.
+      stem = st if st.length > 4
+    end
+
+    # step 3b
     stem.scan(/^(.+?)(ΙΟΥΣ|ΙΑΣ|ΙΕΣ|ΙΟΣ|ΙΟΥ|ΙΟΙ|ΙΩΝ|ΙΟΝ|ΙΑ|ΙΟ)$/u) do |st, suffix|
       stem  = st
       stem << "Ι" if ends_on_vowel?(st) || st.length < 2 || st=~ /^(ΑΓ|ΑΓΓΕΛ|ΑΓΡ|
