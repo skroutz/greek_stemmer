@@ -1,3 +1,3 @@
 module GreekStemmer
-  VERSION = "1.1.9"
+  VERSION = "1.1.10"
 end
