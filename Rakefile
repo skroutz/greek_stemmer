@@ -5,16 +5,10 @@ desc "Update the stems of the sample words"
 task :update_greek_stemming_sample do
 
   words = Set.new
-  File.open("benchmarks/stemming_sample.txt", "r") do |sample|
-    while(line = sample.gets)
-      word, _ = line.split(",")
-      words << word
-    end
+  File.open('benchmarks/stemming_sample.txt', 'r').each do |line|
+    words << line.strip.split(',').first
   end
 
-  File.open("benchmarks/stemming_sample.txt", "w") do |sample|
-    words.each do |word|
-      sample.puts "#{word},#{GreekStemmer.stem(word)}"
-    end
-  end
+  new_data = words.map { |w| [w, GreekStemmer.stem(w)].join(',') }.join("\n")
+  File.write('benchmarks/stemming_sample.txt', new_data)
 end
