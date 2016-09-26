@@ -39,12 +39,7 @@ module GreekStemmer
     stem = word.dup
     return stem if PROTECTED_WORDS.include?(stem) || !greek?(word)
 
-    step_1_regexp = /(.*)(#{STEP_1_EXCEPTIONS.keys.join("|")})$/u
-
-    # step 1
-    stem.scan(step_1_regexp) do |st, suffix|
-      stem = st + STEP_1_EXCEPTIONS[suffix]
-    end
+    return STEP_1_EXCEPTIONS[stem] if STEP_1_EXCEPTIONS[stem]
 
     # step 2a
     stem.scan(/^(.+?)(ΑΔΕΣ|ΑΔΩΝ)$/u) do |st, suffix|
