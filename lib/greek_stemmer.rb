@@ -21,9 +21,6 @@ module GreekStemmer
     end
   end
 
-  # Transformations for step 1 words
-  STEP_1_EXCEPTIONS = load_settings("step_1_exceptions")
-
   # Protected words
   PROTECTED_WORDS   = load_settings("protected_words")
 
@@ -39,11 +36,9 @@ module GreekStemmer
     stem = word.dup
     return stem if PROTECTED_WORDS.include?(stem) || !greek?(word)
 
-    step_1_regexp = /(.*)(#{STEP_1_EXCEPTIONS.keys.join("|")})$/u
-
     # step 1
-    stem.scan(step_1_regexp) do |st, suffix|
-      stem = st + STEP_1_EXCEPTIONS[suffix]
+    stem.scan(step_1_regex) do |st, suffix|
+      stem = st + step_1_exceptions[suffix]
     end
 
     # step 2a
@@ -260,6 +255,16 @@ module GreekStemmer
   end
 
   private
+
+  # Transformations for step 1 suffixes
+  def step_1_exceptions
+    @step_1_exceptions ||= load_settings("step_1_exceptions")
+  end
+
+  # Regex matching terms having step 1 exceptions as suffix
+  def step_1_regex
+    @step_1_regex ||= /(.*)(#{step_1_exceptions.keys.join("|")})$/u
+  end
 
   def ends_on_vowel?(word)
     word =~ /[ΑΕΗΙΟΥΩ]$/u
