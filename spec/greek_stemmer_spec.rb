@@ -25,6 +25,12 @@ describe GreekStemmer do
           expect(described_class.stem(word)).to eq(word)
         end
       end
+
+      it 'correctly stems 0-level exceptions' do
+        config['step_0_exceptions'].each_pair do |word, stem|
+          expect(described_class.stem(word)).to eq(stem)
+        end
+      end
     end
   end
 end

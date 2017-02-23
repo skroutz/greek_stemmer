@@ -36,6 +36,8 @@ module GreekStemmer
     stem = word.dup
     return stem if PROTECTED_WORDS.include?(stem) || !greek?(word)
 
+    return step_0_exceptions[stem] if step_0_exceptions.include?(stem)
+
     # step 1
     stem.scan(step_1_regex) do |st, suffix|
       stem = st + step_1_exceptions[suffix]
@@ -255,6 +257,11 @@ module GreekStemmer
   end
 
   private
+
+  # Top-level stemming exceptions for full words
+  def step_0_exceptions
+    @step_0_exceptions ||= load_settings("step_0_exceptions")
+  end
 
   # Transformations for step 1 suffixes
   def step_1_exceptions
