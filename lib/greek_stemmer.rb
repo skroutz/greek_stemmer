@@ -36,7 +36,7 @@ module GreekStemmer
 
   # Normalize Greek words for be ready to stem
   def normalize(word)
-    diacritics_remover(word).upcase
+    remove_diacritics(word).upcase
   end
 
   # Protected words
@@ -276,7 +276,7 @@ module GreekStemmer
 
   private
 
-  def diacritics_remover(string)
+  def remove_diacritics(string)
     string.gsub(diacritics_remover_map_keys, DIACRITICS_REMOVER_MAP)
   end
 
