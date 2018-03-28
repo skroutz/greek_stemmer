@@ -41,9 +41,11 @@ Original work: [bandito](https://github.com/bandito)
 
 1. Fork it ( http://github.com/<my-github-username>/greek_stemmer/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+3. Perform changes and run `bundle exec rake update_greek_stemming_sample` to
+   update the stemming samples
+4. Commit your changes (`git commit -a`)
+5. Push to the branch (`git push origin my-new-feature`)
+6. Create new Pull Request
 
 ## License
 
