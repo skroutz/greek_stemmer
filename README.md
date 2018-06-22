@@ -29,6 +29,14 @@ Normalization means two things for this algorithm: detone and upcase.
   GreekStemmer.stem("ΠΟΣΟΤΗΤΑ") # => "ΠΟΣΟΤΗΤ"
 ```
 
+If your input not ready to use, you can do normalizeing in one step
+
+```ruby
+  require 'greek_stemmer'
+
+  GreekStemmer.normalize_and_stem("ποσοτητα") # => "ΠΟΣΟΤΗΤ"
+```
+
 ## References
 
 * [Development of a Stemmer for the Greek Language](http://people.dsv.su.se/~hercules/papers/Ntais_greek_stemmer_thesis_final.pdf)

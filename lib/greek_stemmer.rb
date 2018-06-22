@@ -21,6 +21,24 @@ module GreekStemmer
     end
   end
 
+  # Normalizeing
+  DIACRITICS_REMOVER_MAP = {
+    "Ά" => "Α", "ά" => "α", "Έ" => "Ε", "έ" => "ε", "Ή" => "Η", "ή" => "η",
+    "Ί" => "Ι", "Î" => "Ι", "ί" => "ι", "ϊ" => "ι", "ΐ" => "ι", "Ό" => "Ο",
+    "ό" => "ο", "ς" => "σ", "Ύ" => "Υ", "ύ" => "υ", "ϋ" => "υ", "ΰ" => "υ",
+    "Ώ" => "Ω", "ώ" => "ω"
+  }.freeze
+
+  # Normalize after stem
+  def normalize_and_stem(word)
+    stem(normalize(word))
+  end
+
+  # Normalize Greek words for be ready to stem
+  def normalize(word)
+    remove_diacritics(word).upcase
+  end
+
   # Protected words
   PROTECTED_WORDS   = load_settings("protected_words")
 
@@ -258,6 +276,14 @@ module GreekStemmer
   end
 
   private
+
+  def remove_diacritics(string)
+    string.gsub(diacritics_remover_map_keys, DIACRITICS_REMOVER_MAP)
+  end
+
+  def diacritics_remover_map_keys
+    Regexp.new(DIACRITICS_REMOVER_MAP.keys.map { |x| Regexp.escape(x) }.join("|"))
+  end
 
   # Top-level stemming exceptions for full words
   def step_0_exceptions
