@@ -73,6 +73,7 @@ step_1_exceptions:
   ΕΥΑ: ΕΥ
 
 protected_words:
+  - ΘΑΛΑΣΣΗΣ
   - ΑΓΟΡΙ
   - ΑΚΟΥΣΤΙΚΑ
   - ΑΚΡΙΒΩΣ
